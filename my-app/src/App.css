@@ -1,0 +1,26 @@
+.my-flex-container{
+  border: solid 3px red;
+  height: 618px;
+  width: 618px;
+ 
+display: flex;
+flex-wrap: wrap;
+}
+
+.my-flex-block{
+  
+  border: solid 3px black;
+  height: 200px;
+  width: 200px;
+}
+
+.cross{
+  
+  height: 200px;
+  width: 200px;
+}
+
+.zero{
+  height: 200px;
+  width: 200px;
+}
