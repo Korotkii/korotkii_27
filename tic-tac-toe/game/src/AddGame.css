@@ -20,7 +20,7 @@
 }
 
 .pole{
-  border: solid 3px red;
+  border: solid 3px rgb(179, 255, 0);
   /* position: absolute; */
   margin-top: 60px;
   margin-left: 35%;
@@ -136,8 +136,19 @@ border: solid 1px blue;
   width: 100%;
   height: 50px;
   border: solid 1px olive;
-  /* align: center; */
+  /* align-content: center; */
 }
 .button{
-  margin-left: 30%;
+  margin-left: 38%;
+}
+.timer{
+  float: left;
+  /* padding-bottom: 30px; */
+  border: solid 1px blue;
+}
+.clock{
+  width: 70%;
+  padding: 10px;
+  border: solid 1px blue;
+  float: right;
 }

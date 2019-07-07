@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import './AddGame.css';
-import { Timer } from './Timer';
-// import './AddGame.js'
 import { Clock } from './Clock';
-
-
-const content = (    
+import './AddGame.css';
+export class GamePole extends React.Component {
+    
+    function game() { 
+        return (
         <div className="disp">
 
             <div className="title_game" >
@@ -45,7 +44,6 @@ const content = (
                 </div>
                 <div className="time">
                     <Clock/>     
-                    <Timer/>
                 </div>
                     
                     <div className="button">
@@ -55,16 +53,6 @@ const content = (
 
         </div>        
         
-);
-
-
-
-ReactDom.render(content, document.getElementById('root'));
-
-
-
-
-
-
-
-
+    );
+}
+// export default game;
