@@ -8,11 +8,11 @@ export class Timer extends React.Component {
             currentTime: null,
             minut: 0
         } 
-        this.clockLauncher()       
+        this.TimerLauncher()       
         
     }
     
-    clockLauncher(){
+    TimerLauncher(){
         let timer = setInterval(()=>{ 
             var time = this.state.currentTime +1
             var minut = this.state.minut
@@ -23,7 +23,7 @@ export class Timer extends React.Component {
             
             if (minut === 5){
                 clearInterval(timer)
-                alert ("Время вышло кто выйграл пока ХЗ!!!")
+                alert ("Время вышло кто выйграл пока Неопределено!!!")
             }
             this.setState({
                 currentTime: time,
@@ -33,8 +33,10 @@ export class Timer extends React.Component {
     }
     
     render(){
-        return <div className ="timer"> 0{this.state.minut} мин : {this.state.currentTime} сек</div>
+        return (<div className ="timer"> 0{this.state.minut} мин : {this.state.currentTime} сек</div>
+        )
     }
+
 }
 
 
