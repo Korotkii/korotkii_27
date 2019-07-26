@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import {Add_Game} from './Add_Game.css';
-// import {AddGame} from './AddGame.js';
+import {AddGame} from './AddGame.js';
 
 export class Game_List extends React.Component {
    AddPlayer(){
     //    alert (" +1 player")
-    //    <AddPlayer/>
+    return (<AddGame/>); // сделать по анологии с флагами, сам метод должен быть написан в рендере
    }
 
     render(){
@@ -27,7 +27,7 @@ export class Game_List extends React.Component {
 
                 <div className="Add_player">
                     
-                    <button type="button" className="Add" onClick={this.AddPlayer}>+</button>
+                    <button type="button" className="Add" onClick={this.AddPlayer}>  </button>
                 </div>
             </div>
         );
