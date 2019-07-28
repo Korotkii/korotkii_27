@@ -8,8 +8,8 @@ export default class ActivePlayer extends React.Component{
 
     render(){
         return(
-            <div >
-                <div >{this.props.ActivePlayer1.id}</div>
+            <div className="my-flex-block-A2">
+                <div >{this.props.activePlayer1.id}</div>
                 {/* <img src={cross}  height="100px" width="100px"/> */}
             </div>
         );

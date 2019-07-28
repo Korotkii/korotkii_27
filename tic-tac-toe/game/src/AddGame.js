@@ -4,7 +4,7 @@ import { Timer } from './Timer';
 import './Add_Game.css';
 import cross from "./cross.png";
 import zero from "./zero.png";
-import ActivePlayer  from './ActivePlayer';
+import  ActivePlayer from "./ActivePlayer.js";
 import Cells from "./cell.js";
 
 
@@ -21,6 +21,7 @@ export class AddGame extends React.Component {
      
     }
     
+    
     Surrender_player() {
           
         alert ("Сдался лошара!!!" )
@@ -28,25 +29,27 @@ export class AddGame extends React.Component {
     
     cellclick(id){
         
-        this.setState({active:id});        
+        this.setState({active:id})     
        
     }
     
     render() { 
-        const cells = this.state.cells;
+       
+        let cells = this.state.cells;
             if(!cells){
                 cells = [];
             }
-        let ActivePlayer = cells.find(cell=>cell.id == this.state.active)
-            if(!ActivePlayer){
-                ActivePlayer = {}; 
+        let activePlayer = cells.find(cell=>cell.id == this.state.active)
+            if(!activePlayer){
+                activePlayer = {}; 
             }
-        console.dir(ActivePlayer);
+        console.dir(activePlayer);
 
 
         return (
             
             <div className="disp">
+                <Cells/>
                 <div className="title_game" >                    
                     <h4 className="title_text">Tic tac toe </h4>                
                 </div>                
@@ -78,18 +81,19 @@ export class AddGame extends React.Component {
                         </div> 
 
                     </div>
-
-                    {cells.map(cell => (
-                        <div className="my-flex-container" key={cell.id} onClick={this.cellclick.bind(this,cell.id)} >
-                                                       
-                            <div className="my-flex-block-A1">
-                                {cell.id}
-                            </div>
-                        </div>
                         
-                    ))}    
                     
-                    <ActivePlayer ActivePlayer1 = {ActivePlayer}/>
+                        <div className="my-flex-container"  >
+                            {cells.map(cell => (
+                            <div key={cell.id} onClick={this.cellclick.bind(this,cell.id)}>                         
+                                 <div className="my-flex-block-A1" ></div>
+                                 
+                            </div>
+                             ))} 
+                        </div>
+                                             
+                    
+                    <ActivePlayer activePlayer1 = {activePlayer}/>
                    
                     <div className="time">                        
                         <Timer/>                      

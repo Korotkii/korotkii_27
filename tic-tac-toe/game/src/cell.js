@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import './Add_Game.css';
 
-export class Cells extends React.Component {
+export default class Cells extends React.Component {
     render(){
             
             let cell_A1 = {id:1}
@@ -15,11 +15,7 @@ export class Cells extends React.Component {
             let cell_C2 = {id:8}
             let cell_C3 = {id:9}
 
-            let cells=[ 
-                    cell_A1, cell_A2, cell_A3,
-                    cell_B1, cell_B2, cell_B3,
-                    cell_C1, cell_C2, cell_C3
-                  ];
+            let cells=[cell_A1, cell_A2, cell_A3,cell_B1, cell_B2, cell_B3,cell_C1, cell_C2, cell_C3];
                   
             cells=JSON.stringify(cells); // из массива в строку дклаем
 

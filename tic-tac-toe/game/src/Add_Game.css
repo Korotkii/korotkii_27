@@ -26,7 +26,7 @@ body{
   border: solid 3px rgb(179, 255, 0);
   /* position: absolute; */
   margin-top: 60px;
-  margin-left: 37%;
+  margin-left: 33%;
   float:center;
   height:90%;
   width:38%;
@@ -97,7 +97,7 @@ body{
   height: 50px;
   width: 50px;
   background: rgb(226, 43, 43);
-  background-image: url(/src/pic/zero.png) ;
+  background-image: url(zero.png) ;
   background-size: cover;
 }
 
@@ -119,15 +119,15 @@ body{
   border: solid 3px orange;
   height: 100px;
   width:  100px;
-  border-left: none;
-  border-top: none;
+  /* border-left: none;
+  border-top: none; */
   
 }
 .my-flex-block-A2{  
-  border: solid 3px orange;
-  height: 100px;
-  width: 100px;
-  border-top: none;
+  border: solid 3px red;
+  height: 30px;
+  width: 30px;
+  /* border-top: none; */
 }
 .my-flex-block-A3{  
   border: solid 3px orange;
