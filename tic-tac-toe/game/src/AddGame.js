@@ -18,17 +18,18 @@ export class AddGame extends React.Component {
         }
     
      
+    }       
+    
+    Surrender_player() {   
+        let stepNumber = this.state.stepNumber;       
+        if(stepNumber % 2 === 0) {alert ("сдался нолик")
+        
+        }
+        else {alert("сдался крестик")
+        }
+      
     }
     
-    
-    
-    Surrender_player() {
-          
-        alert ("Сдался лошара!!!" )
-    }
-    
-    
-
     handleClick(i){
         const number =  this.state.cells.slice(0, this.state.stepNumber +1);
         const cells= this.state.cells.slice();
@@ -41,25 +42,24 @@ export class AddGame extends React.Component {
             Next_player:!this.state.Next_player,
             stepNumber:number.length
         });
-
     }
 
     showcell(i){
-        return ( <Cell value= {this.state.cells[i]} onClick = {()=>this.handleClick(i)} />
+        return ( 
+            <Cell value = {this.state.cells[i]}  onClick = {()=>this.handleClick(i)} />
         );
     }
     
     
-    render() { 
-      
+    render() {       
         const winner = Player_winner(this.state.cells);
         let status;
         let win = " ";
         if (winner) {
-            status = 'Победил:' + winner;
+            status = 'Победил:'  + winner;
             win = status;
             alert (win);
-        }
+        }        
         
         else if (this.state.stepNumber === 9 && winner === null){
             status = "Ничья"
