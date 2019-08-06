@@ -102,7 +102,17 @@ body{
 }
 
 
-
+.winner{
+  height:30px;
+  weight: 600px;
+  background: red;
+  position: absolute;
+  top: 55px;
+  right: 170px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 24px;
+}
 
 
 .my-flex-container{
@@ -119,15 +129,15 @@ body{
   border: solid 3px orange;
   height: 100px;
   width:  100px;
-  /* border-left: none;
-  border-top: none; */
+  border-left: none;
+  border-top: none;
   
 }
 .my-flex-block-A2{  
-  border: solid 3px red;
-  height: 30px;
-  width: 30px;
-  /* border-top: none; */
+  border: solid 3px orange;
+  height: 100px;
+  width: 100px;
+  border-top: none;
 }
 .my-flex-block-A3{  
   border: solid 3px orange;
@@ -221,4 +231,12 @@ body{
   padding: 20px;
   /* border: solid 1px blue; */
   margin-left: 36%;
+}
+
+.Cell{
+  height: 100px;
+  width: 100px;
+  text-align: center;
+  font-size: 80px;
+  font-weight: bold;
 }
