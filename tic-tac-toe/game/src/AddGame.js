@@ -15,28 +15,31 @@ export class AddGame extends React.Component {
             cells: Array(9).fill(null),
             Next_player: true,
             stepNumber: 0
-        }
-    
-     
+        } 
     }       
     
     Surrender_player() {   
         let stepNumber = this.state.stepNumber;       
-        if(stepNumber % 2 === 0) {alert ("сдался нолик")
-        
+        if(stepNumber % 2 === 0) {
+            alert ("сдался крестик")        
         }
-        else {alert("сдался крестик")
-        }
-      
+        else {
+            alert("сдался нолик")
+        }      
     }
     
-    handleClick(i){
+    handleClick(i){        
         const number =  this.state.cells.slice(0, this.state.stepNumber +1);
         const cells= this.state.cells.slice();
+        console.dir(cells);
+        // const cross = <img  className="cross" src={cross}/>;
+        // const zero = <img  className="cross" src={zero} />;     
         if (Player_winner(cells) || cells[i] ){
             return;
         }
-        cells[i] = this.state.Next_player ? 'X':'O';
+        cells[i] = this.state.Next_player ? 'X':'O';            
+        // cells[i] = this.state.Next_player ? cross:zero;
+        // cells[i] = this.state.Next_player ?  <img  className="cross" src={cross}/> :<img  className="cross" src={zero} />;
         this.setState({
             cells:cells,
             Next_player:!this.state.Next_player,
@@ -51,22 +54,62 @@ export class AddGame extends React.Component {
     }
     
     
-    render() {       
+    render() {   
+        let name_1 = {
+            position: "absolute",
+            left: "0",
+            width: "170px",
+            height: "50px",            
+        }
+
+        let name_2 = {
+            position: "absolute",
+            right: "0px",
+            width: "170px",
+            height: "50px",
+        }
+        let mov_X = {
+            position: "absolute",
+            left: "0",
+            width: "163px",
+            height: "47px",
+            border: "red 3px solid",
+            bordertop: "none",
+            borderleft: "none",
+            borderright: "none",
+        }
+        let mov_O = {
+            position: "absolute",
+            right: "0p",
+            width: "163px",
+            height: "47px",
+            border: "red 3px solid",
+            bordertop: "none",
+            borderleft:"none",
+            borderright: "none",
+        }   
+
+        let stepNumber = this.state.stepNumber;       
+            if(stepNumber % 2 === 0) {
+                name_1 = mov_X
+            }
+            else{ 
+                name_2 = mov_O
+            }
         const winner = Player_winner(this.state.cells);
         let status;
-        let win = " ";
+        
         if (winner) {
             status = 'Победил:'  + winner;
-            win = status;
-            alert (win);
+            alert (status);
         }        
         
         else if (this.state.stepNumber === 9 && winner === null){
             status = "Ничья"
         }
         
-        else{ status = 'Ходит игрок:'  + win +  (this.state.Next_player ? 'X':'O');
-
+        else{ status = 'Ходит игрок:'   +  (this.state.Next_player ? 'X':'O'); 
+           
         }
 
         return (
@@ -83,8 +126,9 @@ export class AddGame extends React.Component {
                         
                         <div className="first_player">                            
                           
-                            <div className="name_1">                                
-                                <h4>Player 1</h4>                            
+                            <div style={name_1}>                                
+                            {/* <div className="name_1"> */}
+                                Player 1                         
                             </div>
                             
                             <div className="pic_cross"> 
@@ -95,8 +139,9 @@ export class AddGame extends React.Component {
                         
                         <div className="second_player">                            
                             
-                            <div className="name_2">                                
-                                <h4>"Player 2"</h4>                            
+                            <div style={name_2}>     
+                            {/* <div className="name_2">                           */}
+                                Player 2                             
                             </div>
                             
                             <div className="pic_zero">
@@ -113,7 +158,7 @@ export class AddGame extends React.Component {
                             
 
                             <div className="my-flex-block-A1" id="0"   >
-                            {this.showcell(0)}
+                            {this.showcell(0)} 
                             </div>
                 
                             <div className="my-flex-block-A2" id="1"  >
@@ -156,7 +201,7 @@ export class AddGame extends React.Component {
                     </div>                        
                          
                     <div className="button">
-                        <button type="button" className="btn btn-primary" onClick={this.Surrender_player}>Surrender</button>                                         
+                        <button type="button" className="btn btn-primary" onClick={this.Surrender_player.bind(this)}>Surrender</button>                                         
                     </div>     
                 </div>
             

@@ -1,13 +1,30 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import {Add_Game} from './Add_Game.css';
-import {AddGame} from './AddGame.js';
+// import {AddGame} from './AddGame.js';
+import {Game} from './game.js';
+import GameService from './SaveGame';
+
 
 export class Game_List extends React.Component {
-   AddPlayer(){
-    //    alert (" +1 player")
-    return (<AddGame/>); // сделать по анологии с флагами, сам метод должен быть написан в рендере
-   }
+    constructor(props){
+        super(props);
+        this.state = {
+            // gameNumber: 0 ,
+            game: GameService.GetGame()
+        }
+    }
+
+    Game_start(){
+        let NewGame = {
+            id: this.id.value ,
+            name: this.name.value,
+            date: this.date.value
+
+        }
+
+        
+    }
 
     render(){
         return( 
@@ -22,13 +39,27 @@ export class Game_List extends React.Component {
                 <input className="pole_name" type="text" placeholder=" Введите своё имя"></input>
                 
                 <div className="select_game">
+                    <br/>
+                   {players.map(player=>(
+                        <div className="game" key={game.id} onClick = {this.showPlayers.bind(this,game.id)} > 
+                            <div className="first">
+                                {first_player.name}
+                            </div>
 
+                            <div className="second">
+                                {second_player.name}
+                            </div>
+                        </div>
+
+                   ))}
+                
+                    <div className="Add_player">     
+
+                        <button type="button" className="Add" onClick={this.Game_start.bind(this)}>  </button>
+                    </div>
                 </div>
 
-                <div className="Add_player">
-                    
-                    <button type="button" className="Add" onClick={this.AddPlayer}>  </button>
-                </div>
+                
             </div>
         );
     }

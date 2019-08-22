@@ -18,9 +18,6 @@ export default  class Cell extends React.Component {
            
             <div className="Cell" onClick={()=>this.props.onClick()} > {this.props.value} </div>
        
-       );
-        
-
-
+        );
     }
 }    

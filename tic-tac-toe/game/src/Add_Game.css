@@ -1,13 +1,14 @@
 body{
   margin: 0;
 }
+/* Add_Game --------------------------------------------------- */
 .disp{
   position: absolute;
   height: 100%;
   width: 100%;
-  border: double 5px green;
-
+  border: double 3px green;
 }
+
 .title_game{
   position: absolute;
   height: 60px;
@@ -32,23 +33,13 @@ body{
   width:38%;
   background: gainsboro;
 }
+
 .player_name{
-  border: solid 1px green;
+  /* border: solid 1px green; */
   width: 510px;
   height: 50px;
   background: gainsboro;
   position: absolute;
-}
-
-.pole_name{
-  margin-top: 70px;
-  width: 400px;
-  height: 40px;
-  border: 2px solid grey;
-  border-top: none;
-  border-left:none;
-  border-right: none;
-  margin-left: 10px;
 }
 
 .first_player{
@@ -56,7 +47,6 @@ body{
   display: flex;
   width:220px;
   height: 50px;
-  background: blue;
   left:0;
 }
 .second_player{
@@ -65,8 +55,8 @@ body{
   right:0; 
   width: 220px;
   height: 50px;
-  background: blue;
-  }
+}
+
 .name_2{
   position: absolute;
   height: 50px;
@@ -74,6 +64,7 @@ body{
   right: 0;
   background: yellow;
 }  
+
 .name_1{
   position: absolute;
   left: 0;
@@ -81,6 +72,7 @@ body{
   height: 50px;
   background: yellow;
 }
+
 .pic_cross{
   position: absolute;
   height: 50px;
@@ -101,19 +93,17 @@ body{
   background-size: cover;
 }
 
-
 .winner{
   height:30px;
-  weight: 600px;
+  width: 200px;
   background: red;
   position: absolute;
   top: 55px;
-  right: 170px;
+  right: 150px;
   text-align: center;
   font-weight: bold;
   font-size: 24px;
 }
-
 
 .my-flex-container{
   /* position: fixed; */
@@ -183,8 +173,8 @@ body{
   border-bottom: none;
   border-right: none;
 }
-.cross{
-  
+
+.cross{  
   height: 100px;
   width: 100px;
   background-image: url(cross.png) ;
@@ -195,36 +185,17 @@ body{
   height: 100px;
   width: 100px;
   background: rgb(226, 43, 43);
-  background-image: url(/src/pic/zero.png) ;
+  background-image: url(zero.png) ;
   background-size: cover;
-
 }
-
 
 .btn-primary{
   font-size: 15pt;
 }
+
 .button{
   margin-left: 38%;
 }
-.Add_player{
-  width: 70px;
-  height: 70px;
-  /* border:solid 1px orangered; */
-  margin-left: 1250px;
-  margin-top: 400px;
-  /* margin: 100px; */
-}
-.Add{
-  position: absolute;
-  font-weight: bolder;
-  height: 70px;
-  width: 70px;
-  border-radius: 100%;
-  background-image: url(+.png) ;
-  background-size: cover;
-}
-
 
 .timer{
   float: center;
@@ -239,4 +210,91 @@ body{
   text-align: center;
   font-size: 80px;
   font-weight: bold;
+}
+
+.Active_Player1{
+  position: absolute;
+  display: flex;
+  width:220px;
+  height: 50px;
+  /* background: rgb(255, 0, 170); */
+  left:0;
+}
+
+.Active_Player2{
+  position: absolute;
+  display: flex;
+  right:0; 
+  width: 220px;
+  height: 50px;
+  /* background: rgb(255, 0, 170); */
+}
+
+/* GameList ---------------------------------------------------------------- */
+
+.Add{
+  position: absolute;
+  font-weight: bolder;
+  height: 70px;
+  width: 70px;
+  border-radius: 100%;
+  background-image: url(+.png) ;
+  background-size: cover;
+
+}
+
+.pole_name{
+  
+  margin-top: 70px;
+  width: 400px;
+  height: 40px;
+  border: 2px solid grey;
+  border-top: none;
+  border-left:none;
+  border-right: none;
+  margin-left: 10px;
+  /* background: red; */
+}
+
+.Add_player{
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  right: 30px;
+  bottom: 40px;
+}
+
+.select_game{
+  display: flex;
+  flex-wrap: wrap;
+  background: rgb(190, 183, 183);
+  width: 100%;
+
+}
+.game{
+  border: 2px solid black;
+  height: 120px;
+  width: 170px;
+  margin-left: 15px;
+  margin-top: 15px;
+}
+
+.first{
+  height: 48%;
+  width: 100%;
+  border-top: none;
+  border-left:none;
+  border-right: none;
+  border-bottom: 2px solid grey;
+  background: white;
+}
+
+.second{
+  height: 48%;
+  width: 100%;
+  border-top: 2px solid grey;
+  border-left:none;
+  border-right: none;
+  border-bottom: none;
+  background: white;
 }
