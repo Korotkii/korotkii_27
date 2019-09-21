@@ -17,11 +17,11 @@ export  class Game extends React.Component {
         return(
             <div className="game" > 
                 <div className="first">
-                    {this.first_player.name}
+                    {/* {this.first_player.name} */}
                 </div>
 
                 <div className="second">
-                    {this.second_player.name}
+                    {/* {this.second_player.name} */}
                 </div>
             </div>
         );

@@ -1,45 +1,87 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { Timer } from './Timer';
+import { Timer } from './components/Timer/Timer.js';
 import './Add_Game.css';
-import cross from "./cross.png";
-import zero from "./zero.png";
-import Cell from "./cells.js";
-
+import cross from "./components/picture/cross.png";
+import zero from "./components/picture/zero.png";
+import Cell from "./components/Cells/Cells.js";
+import { Redirect } from 'react-router-dom';
+import SaveGame from "./SaveGame.js";
 
 export class AddGame extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            // cells: JSON.parse(localStorage.getItem("game")),
             cells: Array(9).fill(null),
             Next_player: true,
-            stepNumber: 0
+            stepNumber: 0 , 
+            redirect: false,
+            player_1:this.props.name,
         } 
     }       
     
     Surrender_player() {   
         let stepNumber = this.state.stepNumber;       
         if(stepNumber % 2 === 0) {
-            alert ("сдался крестик")        
+            alert("сдался крестик")
+            let loser = "X"
+            let game = SaveGame.get_game("game");
+            let length = game.length;
+            
+            let newgame ={
+                id: length+1,   
+                player_1: this.state.player_1,          
+                player_2: "",
+                loser: loser,
+                // winner: winner,
+            }
+
+            game.push (newgame);
+            SaveGame.save("game", game)
+    
+            this.setState({
+                redirect:true,
+                path: "/",
+                loser: loser,
+            })
         }
         else {
-            alert("сдался нолик")
+            alert("сдался нолик") 
+            let loser = "O"
+            let game = SaveGame.get_game("game");
+            let length = game.length;
+            
+            let newgame ={
+                id: length+1,   
+                player_1: "",          
+                player_2: "",
+                loser: loser,
+                // winner: winner,
+            }
+
+            game.push (newgame);
+            SaveGame.save("game", game)
+            
+            this.setState({
+                redirect:true,
+                path: "/",
+                loser: loser,
+            })
+
         }      
+        
     }
     
     handleClick(i){        
         const number =  this.state.cells.slice(0, this.state.stepNumber +1);
         const cells= this.state.cells.slice();
-        console.dir(cells);
-        // const cross = <img  className="cross" src={cross}/>;
-        // const zero = <img  className="cross" src={zero} />;     
+        // console.dir(cells);
+          
         if (Player_winner(cells) || cells[i] ){
             return;
         }
         cells[i] = this.state.Next_player ? 'X':'O';            
-        // cells[i] = this.state.Next_player ? cross:zero;
-        // cells[i] = this.state.Next_player ?  <img  className="cross" src={cross}/> :<img  className="cross" src={zero} />;
+        
         this.setState({
             cells:cells,
             Next_player:!this.state.Next_player,
@@ -55,6 +97,15 @@ export class AddGame extends React.Component {
     
     
     render() {   
+
+        if(this.state.redirect){
+            return <Redirect to = "/" />;  // вернуться в корень
+        }
+
+        const id = this.props.match.params.id;
+        let game = SaveGame.get_game("game");
+        let games = game.find(games =>games.id ==id)
+
         let name_1 = {
             position: "absolute",
             left: "0",
@@ -101,11 +152,41 @@ export class AddGame extends React.Component {
         
         if (winner) {
             status = 'Победил:'  + winner;
-            alert (status);
+            let game = SaveGame.get_game("game");
+            // let length = game.length;
+            
+            let newgame ={
+                id: id,   
+                player_1: "тут должно быть имя игрока с главной страницы где создается список игр",
+                winner: winner,
+            }
+
+            let currentIndex = game.findIndex(games => games.id == id);
+            game.splice(currentIndex,1)
+
+            game.push (newgame);
+            SaveGame.save("game", game)
+    
+            this.setState({
+                redirect:true,
+                path: "/",
+                winner: winner,
+            })
+            
+            alert(33);
+
         }        
         
         else if (this.state.stepNumber === 9 && winner === null){
             status = "Ничья"
+            this.setState({
+                redirect: true,
+                path: "/",
+                winner: status ,
+
+
+            })
+
         }
         
         else{ status = 'Ходит игрок:'   +  (this.state.Next_player ? 'X':'O'); 
@@ -196,7 +277,7 @@ export class AddGame extends React.Component {
                         </div> 
                        
                    
-                    <div className="time">                        
+                    <div>                        
                         <Timer/>                      
                     </div>                        
                          
@@ -214,6 +295,7 @@ export class AddGame extends React.Component {
 }
 
 function Player_winner(cells){
+
     const lines = [
         [0, 1, 2],
         [3, 4, 5],

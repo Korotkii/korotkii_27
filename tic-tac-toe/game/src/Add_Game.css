@@ -79,7 +79,7 @@ body{
   width: 50px;
   background: blueviolet;
   right:0;  
-  background-image: url(cross.png) ;
+  background-image: url(./components/picture/cross.png) ;
   background-size: cover;
 }
 
@@ -89,7 +89,7 @@ body{
   height: 50px;
   width: 50px;
   background: rgb(226, 43, 43);
-  background-image: url(zero.png) ;
+  background-image: url(./components/picture/zero.png) ;
   background-size: cover;
 }
 
@@ -177,7 +177,7 @@ body{
 .cross{  
   height: 100px;
   width: 100px;
-  background-image: url(cross.png) ;
+  background-image: url(./components/picture/cross.png) ;
   background-size: cover;
 }
 
@@ -185,7 +185,7 @@ body{
   height: 100px;
   width: 100px;
   background: rgb(226, 43, 43);
-  background-image: url(zero.png) ;
+  background-image: url(./components/picture/zero.png) ;
   background-size: cover;
 }
 
@@ -197,20 +197,9 @@ body{
   margin-left: 38%;
 }
 
-.timer{
-  float: center;
-  padding: 20px;
-  /* border: solid 1px blue; */
-  margin-left: 36%;
-}
 
-.Cell{
-  height: 100px;
-  width: 100px;
-  text-align: center;
-  font-size: 80px;
-  font-weight: bold;
-}
+
+
 
 .Active_Player1{
   position: absolute;
