@@ -25,19 +25,19 @@ export class AddGame extends React.Component {
         if(stepNumber % 2 === 0) {
             alert("сдался крестик")
             let loser = "X"
-            let game = SaveGame.get_game("game");
-            let length = game.length;
+            // let game = SaveGame.get_game("game");
+            // let length = game.length;
             
-            let newgame ={
-                id: length+1,   
-                player_1: this.state.player_1,          
-                player_2: "",
-                loser: loser,
-                // winner: winner,
-            }
+            // let newgame ={
+            //     id: length+1,   
+            //     player_1: this.state.player_1,          
+            //     player_2: "",
+            //     loser: loser,
+            //     // winner: winner,
+            // }
 
-            game.push (newgame);
-            SaveGame.save("game", game)
+            // game.push (newgame);
+            // SaveGame.save("game", game)
     
             this.setState({
                 redirect:true,
@@ -48,19 +48,19 @@ export class AddGame extends React.Component {
         else {
             alert("сдался нолик") 
             let loser = "O"
-            let game = SaveGame.get_game("game");
-            let length = game.length;
+            // let game = SaveGame.get_game("game");
+            // let length = game.length;
             
-            let newgame ={
-                id: length+1,   
-                player_1: "",          
-                player_2: "",
-                loser: loser,
+            // let newgame ={
+            //     id: length+1,   
+            //     player_1: "",          
+            //     player_2: "",
+            //     loser: loser,
                 // winner: winner,
-            }
+            // }
 
-            game.push (newgame);
-            SaveGame.save("game", game)
+            // game.push (newgame);
+            // SaveGame.save("game", game)
             
             this.setState({
                 redirect:true,
@@ -103,6 +103,8 @@ export class AddGame extends React.Component {
         }
 
         const id = this.props.match.params.id;
+        const name = this.props.match.params.player_1;
+        
         let game = SaveGame.get_game("game");
         let games = game.find(games =>games.id ==id)
 
@@ -153,11 +155,12 @@ export class AddGame extends React.Component {
         if (winner) {
             status = 'Победил:'  + winner;
             let game = SaveGame.get_game("game");
-            // let length = game.length;
-            
+            let length = game.length;
+            let id = length
+           
             let newgame ={
-                id: id,   
-                player_1: "тут должно быть имя игрока с главной страницы где создается список игр",
+                id: game.length,   
+                player_1: name,
                 winner: winner,
             }
 

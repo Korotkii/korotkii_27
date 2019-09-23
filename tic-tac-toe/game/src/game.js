@@ -4,14 +4,14 @@ import './Add_Game.css';
 
 
 export  class Game extends React.Component {
-    SaveGame(){
-        let NewGame = {
-            id: this.id.value ,
-            name: this.name.value,
-            date: this.date.value
+    // SaveGame(){
+    //     let NewGame = {
+    //         id: this.id.value ,
+    //         name: this.name.value,
+    //         date: this.date.value
 
-        }
-    }
+    //     }
+    // }
 
     render(){
         return(

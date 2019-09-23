@@ -27,7 +27,7 @@ import {BrowserRouter as Router, Route} from "react-router-dom";
 ReactDom.render((
     <Router>
         <Route exact path = "/" component = {Game_List} />
-        <Route path = "/AddGame/:id" component = {AddGame} />
+        <Route path = "/AddGame/:id/:player_1" component = {AddGame} />
 
     </Router>), document.getElementById('root'));  // список игр
 

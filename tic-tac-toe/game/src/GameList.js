@@ -59,15 +59,17 @@ export class Game_List extends React.Component {
                 let newgame = {
                     id: length + 1 ,
                     player_1: this.name.value,          
-                   
+                    winner:"",
                 };
 
                 game.push(newgame);
                 SaveGame.save("game", game);
                 
                 this.setState({
-                    path: "/AddGame/" + newgame.id,
-                    redirect: true
+                    path: "/AddGame/" + newgame.player_1,
+                    // path: "/AddGame/" + newgame.id,
+                    redirect: true,
+                    
                 });
 
             }
