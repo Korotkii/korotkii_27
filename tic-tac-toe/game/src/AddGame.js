@@ -8,79 +8,115 @@ import Cell from "./components/Cells/Cells.js";
 import { Redirect } from 'react-router-dom';
 import SaveGame from "./SaveGame.js";
 
+
+ 
+
 export class AddGame extends React.Component {
     constructor(props){
         super(props);
+            const id = this.props.match.params.id;
+            let saveGame = new SaveGame()
+            let games = saveGame.get_game("games");
+            let game = games.find(game =>game.id == id)
+        
         this.state = {
             cells: Array(9).fill(null),
             Next_player: true,
             stepNumber: 0 , 
-            redirect: false,
-            player_1:this.props.name,
-        } 
-    }       
+            redirect: false,   
+            game:game,
+        }  
+    }               
+    
     
     Surrender_player() {   
         let stepNumber = this.state.stepNumber;       
         if(stepNumber % 2 === 0) {
             alert("сдался крестик")
-            let loser = "X"
-            // let game = SaveGame.get_game("game");
-            // let length = game.length;
             
+            let games = SaveGame.get_game("games");
+            this.state.game.winner = "Победил - О";
+            this.setState({game:this.state.game});
+            let saveGame = new SaveGame();
+            saveGame.save("games", games);
             // let newgame ={
-            //     id: length+1,   
-            //     player_1: this.state.player_1,          
-            //     player_2: "",
-            //     loser: loser,
-            //     // winner: winner,
+            //     id: this.state.game.id,   
+            //     player_1: this.state.game.player_1,
+            //     player_2: this.state.game.player_2,
+            //     winner: "Победил - O",
+            //     time:"",
+            //     cells:this.state.cells,
             // }
+            
+            // let currentIndex = games.findIndex(game => game.id == this.id);
+            // games.splice(currentIndex,1)
 
-            // game.push (newgame);
-            // SaveGame.save("game", game)
+            // games.push (newgame);
+            // SaveGame.save("games", games)
     
             this.setState({
                 redirect:true,
                 path: "/",
-                loser: loser,
+                winner: "Победил - О",
             })
         }
         else {
             alert("сдался нолик") 
-            let loser = "O"
-            // let game = SaveGame.get_game("game");
-            // let length = game.length;
             
+            let games = SaveGame.get_game("games");
+            this.state.game.winner = "Победил - Х";
+            this.setState({game:this.state.game});
+            SaveGame.save("games", games);
             // let newgame ={
-            //     id: length+1,   
-            //     player_1: "",          
-            //     player_2: "",
-            //     loser: loser,
-                // winner: winner,
+            //     id: this.state.game.id,   
+            //     player_1: this.state.game.player_1,
+            //     player_2:  this.state.game.player_2,
+            //     winner: "Победил - Х",
+            //     time:"",
+            //     cells:this.state.cells,
             // }
-
-            // game.push (newgame);
-            // SaveGame.save("game", game)
             
+            // let currentIndex = games.findIndex(game => game.id == this.id);
+            // games.splice(currentIndex,1)
+
+            // games.push (newgame);
+            // SaveGame.save("games", games)
+
             this.setState({
                 redirect:true,
                 path: "/",
-                loser: loser,
+                winner: "Победил - Х",
             })
-
-        }      
-        
+        }            
     }
     
     handleClick(i){        
         const number =  this.state.cells.slice(0, this.state.stepNumber +1);
         const cells= this.state.cells.slice();
-        // console.dir(cells);
           
         if (Player_winner(cells) || cells[i] ){
             return;
         }
         cells[i] = this.state.Next_player ? 'X':'O';            
+        
+            let games = SaveGame.get_game("games");
+            this.state.game.cells = this.state.cells;
+            this.setState({game:this.state.game});
+            SaveGame.save("games", games);
+            // let newgame ={
+            //     id: this.state.game.id,   
+            //     player_1: this.state.game.player_1,
+            //     player_2: this.state.game.player_2,
+            //     winner: "",
+            //     time:"",
+            //     cells:this.state.cells,
+            // }
+            
+            // let currentIndex = games.findIndex(game => game.id == this.id);
+            // games.splice(currentIndex,1)
+
+            // games.push (newgame);
+            // SaveGame.save("games", games)
         
         this.setState({
             cells:cells,
@@ -93,21 +129,37 @@ export class AddGame extends React.Component {
         return ( 
             <Cell value = {this.state.cells[i]}  onClick = {()=>this.handleClick(i)} />
         );
+    }    
+    
+    componentDidMount(){
+       
+        
+            setInterval(()=>{  
+               
+                let id = this.props.match.params.id;
+                let games = SaveGame.get_game("games");
+                let game = games.find(game =>game.id == id);               
+               
+                game.cells = this.state.cells;                  
+               
+                this.setState({game:game});             
+                
+                SaveGame.save("games", games);
+           
+
+            },5000);
+        
     }
-    
-    
+
+
+
+
     render() {   
 
         if(this.state.redirect){
-            return <Redirect to = "/" />;  // вернуться в корень
+            return <Redirect to = "/" />;  
         }
-
-        const id = this.props.match.params.id;
-        const name = this.props.match.params.player_1;
-        
-        let game = SaveGame.get_game("game");
-        let games = game.find(games =>games.id ==id)
-
+       
         let name_1 = {
             position: "absolute",
             left: "0",
@@ -154,45 +206,60 @@ export class AddGame extends React.Component {
         
         if (winner) {
             status = 'Победил:'  + winner;
-            let game = SaveGame.get_game("game");
-            let length = game.length;
-            let id = length
+            let games = SaveGame.get_game("games");
+            this.state.game.winner = status;
+            this.setState({game:this.state.game});
+            SaveGame.save("games",games);
+            // let newgame ={
+            //     id: this.state.game.id,   
+            //     player_1: this.state.game.player_1,
+            //     player_2: this.state.game.player_2,
+            //     winner: status,
+            //     time:"",
+            //     cells:this.state.cells,
+            // }
+            
+            // let currentIndex = games.findIndex(game => game.id == this.id);
+            // games.splice(currentIndex,1)
+
+            // games.push (newgame);
+            // SaveGame.save("games", games)
            
-            let newgame ={
-                id: game.length,   
-                player_1: name,
-                winner: winner,
-            }
-
-            let currentIndex = game.findIndex(games => games.id == id);
-            game.splice(currentIndex,1)
-
-            game.push (newgame);
-            SaveGame.save("game", game)
-    
             this.setState({
                 redirect:true,
-                path: "/",
+                path: "/" + this.stategame.id,
                 winner: winner,
             })
             
-            alert(33);
+            alert("Победил:" + winner);
 
         }        
         
         else if (this.state.stepNumber === 9 && winner === null){
+           
             status = "Ничья"
+            let games = SaveGame.get_game("games");
+            let newgame ={
+                id: this.state.game.id,   
+                player_1: this.state.game.player_1,
+                player_2: this.state.game.player_2,
+                winner: status,
+                time:"",
+            }
+            
+            let currentIndex = games.findIndex(game => game.id == this.id);
+            games.splice(currentIndex,1)
+
+            games.push (newgame);
+            SaveGame.save("games", games)
             this.setState({
                 redirect: true,
-                path: "/",
+                path: "/" ,
                 winner: status ,
-
-
             })
-
         }
         
-        else{ status = 'Ходит игрок:'   +  (this.state.Next_player ? 'X':'O'); 
+        else { status = 'Ходит игрок:'   +  (this.state.Next_player ? 'X':'O'); 
            
         }
 
@@ -212,7 +279,7 @@ export class AddGame extends React.Component {
                           
                             <div style={name_1}>                                
                             {/* <div className="name_1"> */}
-                                Player 1                         
+                                {this.state.game.player_1}                         
                             </div>
                             
                             <div className="pic_cross"> 
@@ -225,7 +292,7 @@ export class AddGame extends React.Component {
                             
                             <div style={name_2}>     
                             {/* <div className="name_2">                           */}
-                                Player 2                             
+                            {this.state.game.player_2}                             
                             </div>
                             
                             <div className="pic_zero">
