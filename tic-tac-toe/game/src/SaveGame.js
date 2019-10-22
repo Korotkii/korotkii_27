@@ -4,15 +4,7 @@ import ReactDom from 'react-dom';
 export default class SaveGame{
     
     static init(){
-        let games = [
-            {
-            id: 1,   
-            player_1: "Илья",            
-            player_2: "Таня",
-            winner: "",
-            timer:"",
-            },           
-        ];  
+        let games = [];  
 
         this.save("games", games);
     }  

@@ -10,8 +10,8 @@ import { Redirect } from 'react-router-dom';
 export class Game_List extends React.Component {
     constructor(props){
         super(props);
-        // SaveGame.init();
-        const id = this.props.match.params.id;
+        // SaveGame.init();        
+            const id = this.props.match.params.id;
             let games = SaveGame.get_game("games");
             let game = games.find(game =>game.id == id)
         
@@ -23,28 +23,30 @@ export class Game_List extends React.Component {
         }
     }
 
-//     componentDidMount(){
+    componentDidMount(){
        
         
-//         setInterval(()=>{  
+        setInterval(()=>{  
            
-//             let id = this.props.match.params.id;
-//             let games = SaveGame.get_game("games");
-//             let game = games.find(game =>game.id == id);               
+            let id = this.props.match.params.id;
+            let games = SaveGame.get_game("games");
+            let game = games.find(game =>game.id == id);               
            
-//             game.cells = this.state.cells;                  
+            // game.cells = this.state.cells;                  
            
-//             this.setState({game:game});             
+            this.setState({game:game});             
             
-//             SaveGame.save("games", games);
+            // SaveGame.save("games", games);
        
 
-//         },5000);
+        },1000);    
     
-// }
+}
 
    
     render(){
+        
+
         if (this.state.redirect) {
             return (
                <Redirect to = {this.state.path} />
@@ -52,39 +54,36 @@ export class Game_List extends React.Component {
         }        
 
         function handleKeyDown(event) {
-            // if( this.name.value == "" ){
-            //     alert ("Необходимо введите своё имя");               
-            //     this.setState({
-            //         redirect: false,
-                    
-            //     });
-            // }
-            // else{
+            if(event.target.value == "" ){
+                alert ("Необходимо введите своё имя");               
+            
+            }
+            else{
 
             
-            //     if (event.keyCode == 13) {    // Нажат Enter
+                if (event.keyCode == 13) {    // Нажат Enter
             
-            //         let game = SaveGame.get_game("games");
-            //         let length = game.length;                   
-            //         let newgame = {
-            //             id: length + 1 ,
-            //             player_1: this.name.value,    
-            //             player_2: "",      
-            //             winner:"",
-            //             cells:"",
-            //         };
+                    let game = SaveGame.get_game("games");
+                    let length = game.length;                   
+                    let newgame = {
+                        id: length + 1 ,
+                        player_1: event.target.value,    
+                        player_2: "",      
+                        winner:"",
+                        cells:"",
+                    };
                     
-            //         game.push(newgame);
-            //         SaveGame.save("games", game);
+                    game.push(newgame);
+                    SaveGame.save("games", game);
                     
-            //         this.setState({
-            //             // path: "/AddGame/" + newgame.player_1,
-            //             path: "/AddGame/" + newgame.id,
-            //             redirect: true,
+                    this.setState({
+                        // path: "/AddGame/" + newgame.player_1,
+                        path: "/AddGame/" + newgame.id,
+                        redirect: true,
                         
-            //         });      
-            //     }
-            // }    
+                    });      
+                }
+            }    
         }
         
         function game_start(){
@@ -119,14 +118,14 @@ export class Game_List extends React.Component {
         }        
 
         function join_player_2(id){
-            if(this.state.game.player_1 !=="" && this.state.game.player_2 !==""){   // этим условием я хочу проверить что игрок 1 и 2 имеют имя, и по этому надо перекинуть на их игру для просмотра игры
-                this.setState({
-                    path:"/AddGame/" + id,
-                    redirect:true,
+            // if(this.state.game.player_1 !=="" && this.state.game.player_2 !==""){   // этим условием я хочу проверить что игрок 1 и 2 имеют имя, и по этому надо перекинуть на их игру для просмотра игры
+            //     this.setState({
+            //         path:"/AddGame/" + id,
+            //         redirect:true,
                     
-                })
-                alert("fss");
-            }
+            //     })
+            //     alert("fss");
+            // }
 
             if(this.name.value == ""){
                     alert("Необходимо ввести своё имя");
@@ -160,29 +159,63 @@ export class Game_List extends React.Component {
         }
         let game = SaveGame.get_game("games");
 
+        let first={
+            height: "48%",
+            width: "100%",
+            bordertop: "2px solid grey",
+            borderleft:"none",
+            borderright: "none",
+            borderbottom: "none",
+            background: "white",
+        }
+          
+        let second={
+            height: "48%",
+            width: "100%",
+            bordertop: "none",
+            borderleft:"none",
+            borderright: "none",
+            borderbottom: "2px solid grey",
+            background: "white",
+        }
+        let winn_player = {
+            height: "47%",
+            width: "97.3%",
+            background: "white",
+            border: "red 3px solid",
+            
+        }
+        
+        if(game.winner == game.player_1 ){
+            first = winn_player;
+        }
+        else{
+            second = winn_player;
+        }
+
         return( 
             <div className="disp">               
                 <div className="title_game" >
                     <h4 className="title_text">Tic tac toe </h4>
                 </div>
 
-                <input onKeyDown={handleKeyDown} className="pole_name"  placeholder="Введите своё имя" ref={el=>this.name=el}></input>
+                <input onKeyUp={handleKeyDown.bind(this)} className="pole_name"  placeholder="Введите своё имя" ref={el=>this.name=el}></input>
                                 
                 <div className="select_game">
                     <br/>
                     {this.state.games.map(game=>(                       
                         <div key = {game.id} className="game" onClick={join_player_2.bind(this,game.id)}> 
                            
-                            <div className="first">
-                                {game.player_1} <br/>
-                                {game.id}<br/>
-                                {game.winner}
+                            <div className="first" style={first}>
+                                Name - {game.player_1} <br/>
+                                id - {game.id}  <br/>
+                                winn - {game.winner} 
                             </div>
 
-                            <div className="second">
-                                {game.player_2} <br/>
-                                {game.id}<br/>
-                                {game.winner}
+                            <div className="second" style={second}>
+                                Name - {game.player_2} <br/>
+                                id - {game.id}<br/>
+                                winn - {game.winner}
                             </div>
                         </div>     
                     ))}

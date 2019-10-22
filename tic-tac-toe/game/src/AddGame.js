@@ -15,10 +15,10 @@ export class AddGame extends React.Component {
     constructor(props){
         super(props);
             const id = this.props.match.params.id;
-            let saveGame = new SaveGame()
-            let games = saveGame.get_game("games");
-            let game = games.find(game =>game.id == id)
-        
+            let games = SaveGame.get_game("games");
+            let game = games.find(game =>game.id == id)  
+            // game.cells = Array(9).fill(null);
+
         this.state = {
             cells: Array(9).fill(null),
             Next_player: true,
@@ -35,25 +35,22 @@ export class AddGame extends React.Component {
             alert("сдался крестик")
             
             let games = SaveGame.get_game("games");
-            this.state.game.winner = "Победил - О";
+            this.state.game.winner = "О";
             this.setState({game:this.state.game});
-            let saveGame = new SaveGame();
-            saveGame.save("games", games);
-            // let newgame ={
-            //     id: this.state.game.id,   
-            //     player_1: this.state.game.player_1,
-            //     player_2: this.state.game.player_2,
-            //     winner: "Победил - O",
-            //     time:"",
-            //     cells:this.state.cells,
-            // }
             
-            // let currentIndex = games.findIndex(game => game.id == this.id);
-            // games.splice(currentIndex,1)
-
-            // games.push (newgame);
-            // SaveGame.save("games", games)
-    
+            let currentIndex = games.findIndex(game => game.id == this.id);
+                       
+                if( this.state.game.winner == "X"){
+                    this.state.game.winner = this.state.game.player_1;
+                }
+                else {
+                    this.state.game.winner = this.state.game.player_2;
+                }
+            this.setState({game:this.state.game.winner});
+            games.splice(currentIndex,1)
+            games.push (this.state.game); 
+            SaveGame.save("games",games);
+             
             this.setState({
                 redirect:true,
                 path: "/",
@@ -61,48 +58,50 @@ export class AddGame extends React.Component {
             })
         }
         else {
-            alert("сдался нолик") 
-            
+            alert("сдался нолик")             
             let games = SaveGame.get_game("games");
-            this.state.game.winner = "Победил - Х";
+            this.state.game.winner = "X";
             this.setState({game:this.state.game});
-            SaveGame.save("games", games);
-            // let newgame ={
-            //     id: this.state.game.id,   
-            //     player_1: this.state.game.player_1,
-            //     player_2:  this.state.game.player_2,
-            //     winner: "Победил - Х",
-            //     time:"",
-            //     cells:this.state.cells,
-            // }
+            let currentIndex = games.findIndex(game => game.id == this.id);
+                       
+                if( this.state.game.winner == "X"){
+                    this.state.game.winner = this.state.game.player_1;
+                }
+                else {
+                    this.state.game.winner = this.state.game.player_2;
+                }
+            this.setState({game:this.state.game.winner});
+            games.splice(currentIndex,1)
+            games.push (this.state.game); 
+            SaveGame.save("games",games);
             
-            // let currentIndex = games.findIndex(game => game.id == this.id);
-            // games.splice(currentIndex,1)
-
-            // games.push (newgame);
-            // SaveGame.save("games", games)
-
             this.setState({
                 redirect:true,
                 path: "/",
-                winner: "Победил - Х",
+                winner: "Победил - X",
             })
         }            
     }
     
-    handleClick(i){        
-        const number =  this.state.cells.slice(0, this.state.stepNumber +1);
-        const cells= this.state.cells.slice();
+    handleClick(i){  
+        const id = this.props.match.params.id;
+        let games = SaveGame.get_game("games");  
+        let game = games.findIndex(game => game.id == this.id);  
+        const number =  game.cells.slice(0, this.state.stepNumber +1);
+        const cells = game.cells.slice();
+        // const number =  this.state.cells.slice(0, this.state.stepNumber +1);
+        // const cells = this.state.cells.slice();
           
         if (Player_winner(cells) || cells[i] ){
             return;
         }
         cells[i] = this.state.Next_player ? 'X':'O';            
         
-            let games = SaveGame.get_game("games");
-            this.state.game.cells = this.state.cells;
-            this.setState({game:this.state.game});
-            SaveGame.save("games", games);
+            // let games = SaveGame.get_game("games");
+            this.state.game.cells = cells;
+            this.setState({game:this.state.game, cells:this.state.game.cells, stepNumber:number.length});
+            
+            // SaveGame.save("games", games);
             // let newgame ={
             //     id: this.state.game.id,   
             //     player_1: this.state.game.player_1,
@@ -112,47 +111,33 @@ export class AddGame extends React.Component {
             //     cells:this.state.cells,
             // }
             
-            // let currentIndex = games.findIndex(game => game.id == this.id);
-            // games.splice(currentIndex,1)
-
-            // games.push (newgame);
-            // SaveGame.save("games", games)
+            let currentIndex = games.findIndex(game => game.id == this.id);
+            games.splice(currentIndex,1)
+            games.push (this.state.game);
+            SaveGame.save("games", games)
         
         this.setState({
             cells:cells,
-            Next_player:!this.state.Next_player,
+            Next_player: !this.state.Next_player,
             stepNumber:number.length
         });
     }
 
     showcell(i){
         return ( 
-            <Cell value = {this.state.cells[i]}  onClick = {()=>this.handleClick(i)} />
+            <Cell value = {this.state.game.cells[i]}  onClick = {()=>this.handleClick(i)} />
         );
     }    
     
-    componentDidMount(){
-       
-        
+    componentDidMount(){      
             setInterval(()=>{  
-               
                 let id = this.props.match.params.id;
                 let games = SaveGame.get_game("games");
-                let game = games.find(game =>game.id == id);               
-               
-                game.cells = this.state.cells;                  
-               
-                this.setState({game:game});             
-                
-                SaveGame.save("games", games);
-           
-
-            },5000);
-        
+                let game = games.find(game =>game.id == id);                  
+                this.setState({game:game});     
+                   
+            },1000);
     }
-
-
-
 
     render() {   
 
@@ -201,14 +186,23 @@ export class AddGame extends React.Component {
             else{ 
                 name_2 = mov_O
             }
-        const winner = Player_winner(this.state.cells);
+        const winner = Player_winner(this.state.game.cells);
         let status;
         
         if (winner) {
             status = 'Победил:'  + winner;
             let games = SaveGame.get_game("games");
-            this.state.game.winner = status;
-            this.setState({game:this.state.game});
+            let currentIndex = games.findIndex(game => game.id == this.id);
+            this.state.game.winner = winner;             
+                if( this.state.game.winner == "X"){
+                    this.state.game.winner = this.state.game.player_1;
+                }
+                else {
+                    this.state.game.winner = this.state.game.player_2;
+                }
+            this.setState({game:this.state.game.winner});
+            games.splice(currentIndex,1)
+            games.push (this.state.game); 
             SaveGame.save("games",games);
             // let newgame ={
             //     id: this.state.game.id,   
@@ -221,22 +215,18 @@ export class AddGame extends React.Component {
             
             // let currentIndex = games.findIndex(game => game.id == this.id);
             // games.splice(currentIndex,1)
-
             // games.push (newgame);
-            // SaveGame.save("games", games)
-           
+            // SaveGame.save("games", games)           
             this.setState({
                 redirect:true,
-                path: "/" + this.stategame.id,
+                path: "/" + this.state.game.id,
                 winner: winner,
-            })
-            
+            })            
             alert("Победил:" + winner);
-
         }        
         
-        else if (this.state.stepNumber === 9 && winner === null){
-           
+        else if (this.state.stepNumber === 9 && winner === null){           
+            
             status = "Ничья"
             let games = SaveGame.get_game("games");
             let newgame ={
@@ -249,7 +239,6 @@ export class AddGame extends React.Component {
             
             let currentIndex = games.findIndex(game => game.id == this.id);
             games.splice(currentIndex,1)
-
             games.push (newgame);
             SaveGame.save("games", games)
             this.setState({
