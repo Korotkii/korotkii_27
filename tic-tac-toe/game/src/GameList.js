@@ -6,21 +6,19 @@ import SaveGame from './SaveGame.js';
 import { Redirect } from 'react-router-dom';
 
 
-
 export class Game_List extends React.Component {
-    constructor(props){
-        
+    constructor(props){        
         super(props);
         // SaveGame.init();        
             const id = this.props.match.params.id;
             let games = SaveGame.get_game("games");
             let game = games.find(game =>game.id == id);       
+        
         this.state = {
             redirect: false,
             path: "",     
             games: SaveGame.get_game("games"),
             game:game,   
-            // id: this.props.match.params.id, 
         }
     }
 
@@ -29,8 +27,10 @@ export class Game_List extends React.Component {
             const id = this.props.match.params.id;
             let games = SaveGame.get_game("games");
             let game = games.find(game =>game.id == id);          
+           
             // game.cells = cells;                  
-            // this.setState({game:game});   
+            // this.setState({game:game});  
+
         },250);    
     
 }
@@ -39,8 +39,7 @@ export class Game_List extends React.Component {
             return (
                <Redirect to = {this.state.path} />
             );
-        }  
-        debugger;      
+        }        
         const id = this.props.match.params.id;
         let games = SaveGame.get_game("games");
         let game = games.find(game =>game.id == id);
@@ -109,14 +108,14 @@ export class Game_List extends React.Component {
             // if(this.state.game.player_1 !=="" && this.state.game.player_2 !==""){   // этим условием я хочу проверить что игрок 1 и 2 имеют имя, и по этому надо перекинуть на их игру для просмотра игры
             //     this.setState({
             //         path:"/AddGame/" + id,
-            //         redirect:true,
-                    
+            //         redirect:true,                    
             //     })
             //     alert("fss");
             // }
             if(this.name.value == ""){
                 alert("Необходимо ввести своё имя");                   
             }
+
             else{   
                 game.player_2 = this.name.value;
                 let game_index = games.findIndex(game =>game.id == id);
@@ -127,14 +126,10 @@ export class Game_List extends React.Component {
                 this.setState({
                     path:"/AddGame/" + game.id,
                     redirect: true,
-
                 });
             }            
         }
-        
-        let first = "first";
-        let second = "second";
-
+                
         return( 
             <div className="disp">               
                 <div className="title_game" >
@@ -148,30 +143,27 @@ export class Game_List extends React.Component {
                     {this.state.games.map(game=>(                       
                         <div key = {game.id} className="game" onClick={join_player_2.bind(this,game.id)}> 
                            
-                            <div  className={" first " + (game.winner == game.player_1? "winn_player":"")}>
-                                Name - {game.player_1} <br/>
-                                id -   {game.id}  <br/>
-                                winn - {game.winner} 
+                            <div  className={" first " + (game.winner == game.player_1 ? "winn_player ":"")}>
+                                  {  game.player_1} {game.winner == game.player_1  ? "✓" :""} <br/>
+                                id -  {game.id}  <br/>                               
                             </div>
 
-                            <div className={" second " + (game.winner == game.player_2? "winn_player":"")}>
-                                Name - {game.player_2} <br/>
-                                id -   {game.id}<br/>
-                                winn - {game.winner}
+                            <div className={" second " + (game.winner == game.player_2 ? "winn_player":"")}>
+                                  {  game.player_2 }   {game.winner == game.player_2  ? "✓" :""} <br/>
+                                id -   {game.id}<br/>   
+                                                             
                             </div>
                         </div>     
                     ))}
                     
                     <div className="Add_player">          
                        <button className="Add" onClick={game_start.bind(this,id)}></button>
-                    </div>
-                   
-                </div>
-
+                    </div>                   
                 
+                </div>                
+            
             </div>
         );
     }
-
 
 }
