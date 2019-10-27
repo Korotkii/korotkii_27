@@ -263,7 +263,7 @@ body{
 .game{
   border: 2px solid black;
   height: 120px;
-  width: 170px;
+  width: 220px;
   margin-left: 15px;
   margin-top: 15px;
 }
@@ -286,4 +286,10 @@ body{
   border-right: none;
   border-bottom: none;
   background: white;
+}
+.winn_player{
+  height: 47%;
+  width: 97.3%;
+  background:white;
+  border: red 3px solid;  
 }

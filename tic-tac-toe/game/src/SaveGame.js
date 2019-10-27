@@ -4,7 +4,18 @@ import ReactDom from 'react-dom';
 export default class SaveGame{
     
     static init(){
-        let games = [];  
+        let games = [
+            {id:1,
+             player_1: "first",
+             player_2: "second",
+             winner:"first"
+            },
+            { id:2,
+             player_1: "first",
+             player_2: "second",
+             winner:"second"
+            }
+        ];  
 
         this.save("games", games);
     }  
