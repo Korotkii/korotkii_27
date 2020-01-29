@@ -55,22 +55,6 @@ body{
   height: 50px;
 }
 
-/* .name_2{
-  position: absolute;
-  height: 50px;
-  width: 170px;
-  right: 0;
-  background: yellow;
-}   */
-
-/* .name_1{
-  position: absolute;
-  left: 0;
-  width: 170px;
-  height: 50px;
-  background: yellow;
-} */
-
 .pic_cross{
   position: absolute;
   height: 50px;
@@ -210,7 +194,7 @@ body{
   height: 50px;
 }
 
-/* .name_1  {
+.name_1  {
   position: absolute;
   left: 0;
   width: 170px;
@@ -243,7 +227,7 @@ body{
   bordertop: none;
   borderleft: none;
   borderright: none;
-} */
+}
 
 
 /* GameList ---------------------------------------------------------------- */
@@ -254,7 +238,7 @@ body{
   height: 70px;
   width: 70px;
   border-radius: 100%;
-  background-image: url(+.png) ;
+  background-image: url(./components/picture/+.png) ;
   background-size: cover;
 
 }

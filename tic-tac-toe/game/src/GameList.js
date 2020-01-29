@@ -8,11 +8,11 @@ import { Redirect } from 'react-router-dom';
 
 export class Game_List extends React.Component {
     constructor(props){        
-        super(props);
-        // SaveGame.init();        
-            const id = this.props.match.params.id;
-            let games = SaveGame.get_game("games");
-            let game = games.find(game =>game.id == id);       
+        super(props);   
+
+        const id = this.props.match.params.id;
+        let games = SaveGame.get_game("games");
+        let game = games.find(game =>game.id == id);       
         
         this.state = {
             redirect: false,
@@ -23,28 +23,14 @@ export class Game_List extends React.Component {
     }
 
     componentDidMount(){   
-        setInterval(()=>{           
-            const id = this.props.match.params.id;
-            let games = SaveGame.get_game("games");
-            let game = games.find(game =>game.id == id);          
-           
-            // game.cells = cells;                  
-            // this.setState({game:game});  
-
+        setInterval(()=>{     
+            let games = SaveGame.get_game("games");                
+            this.setState({games:games});  
         },250);    
     
-}
-    render(){     
-        if (this.state.redirect) {
-            return (
-               <Redirect to = {this.state.path} />
-            );
-        }        
-        const id = this.props.match.params.id;
-        let games = SaveGame.get_game("games");
-        let game = games.find(game =>game.id == id);
-        
-        function handleKeyDown(event) {
+    }
+
+        handleKeyDown(event){
             if(event.target.value == "" ){
                 alert ("Необходимо введите своё имя");               
             }
@@ -60,8 +46,11 @@ export class Game_List extends React.Component {
                         cells: Array(9).fill(null),
                         Next_player: true,
                         creator:true,
-                        count_player: 0,
-                        
+                        count_player: 0, 
+                        minut:0,
+                        seconds:0,   
+                        running_time:0, 
+                                           
                     };
 
                     games.push(newgame);
@@ -75,7 +64,8 @@ export class Game_List extends React.Component {
             }    
         }
         
-        function game_start(){   
+        
+        game_start(){   
             let games = SaveGame.get_game("games"); 
             let length = games.length                  
             if( this.name.value == "" ){
@@ -91,6 +81,10 @@ export class Game_List extends React.Component {
                     Next_player: true,
                     creator:true,
                     count_player: 0,
+                    minut:0,
+                    seconds:0,
+                    running_time:0,
+                    
                 };
 
                 games.push(newgame);
@@ -102,16 +96,9 @@ export class Game_List extends React.Component {
             }            
         }        
 
-        function join_player_2(id){
+        join_player_2(id){
             let games = SaveGame.get_game("games");
             let game = games.find(game =>game.id == id);
-            // if(this.state.game.player_1 !=="" && this.state.game.player_2 !==""){   // этим условием я хочу проверить что игрок 1 и 2 имеют имя, и по этому надо перекинуть на их игру для просмотра игры
-            //     this.setState({
-            //         path:"/AddGame/" + id,
-            //         redirect:true,                    
-            //     })
-            //     alert("fss");
-            // }
             if(this.name.value == ""){
                 alert("Необходимо ввести своё имя");                   
             }
@@ -129,6 +116,20 @@ export class Game_List extends React.Component {
                 });
             }            
         }
+
+
+    render(){    
+                // убрать коментарии(мертвый код)
+        if (this.state.redirect) {
+            return (
+               <Redirect to = {this.state.path} />
+            );
+        }        
+        const id = this.props.match.params.id;
+        let games = SaveGame.get_game("games");
+        let game = games.find(game =>game.id == id);
+        
+        
                 
         return( 
             <div className="disp">               
@@ -136,28 +137,28 @@ export class Game_List extends React.Component {
                     <h4 className="title_text">Tic tac toe </h4>
                 </div>
 
-                <input onKeyUp={handleKeyDown.bind(this)} className="pole_name" placeholder="Введите своё имя" ref={el=>this.name=el}></input>
+                <input onKeyUp={this.handleKeyDown.bind(this)} className="pole_name" placeholder="Введите своё имя" ref={el=>this.name=el}></input>
                                 
                 <div className="select_game">
                     <br/>
                     {this.state.games.map(game=>(                       
-                        <div key = {game.id} className="game" onClick={join_player_2.bind(this,game.id)}> 
+                        <div key = {game.id} className="game" onClick={this.join_player_2.bind(this,game.id)}> 
                            
                             <div  className={" first " + (game.winner == game.player_1 ? "winn_player ":"")}>
-                                  {  game.player_1} {game.winner == game.player_1  ? "✓" :""} <br/>
-                                id -  {game.id}  <br/>                               
+                                  { game.player_1} {game.winner == game.player_1  ? "✓" :""} <br/>
+                                  {/* {game.minut}  {game.seconds}                    */}
                             </div>
 
-                            <div className={" second " + (game.winner == game.player_2 ? "winn_player":"")}>
-                                  {  game.player_2 }   {game.winner == game.player_2  ? "✓" :""} <br/>
-                                id -   {game.id}<br/>   
+                            <div className={" second " + (game.player_2 && game.winner == game.player_2 ? "winn_player":"")}>
+                                  { game.player_2 }   {game.player_2 && game.winner == game.player_2  ? "✓" :""} <br/>
+                                  {/* {game.minut} {game.seconds} */}
                                                              
                             </div>
                         </div>     
                     ))}
                     
                     <div className="Add_player">          
-                       <button className="Add" onClick={game_start.bind(this,id)}></button>
+                       <button className="Add" onClick={this.game_start.bind(this,id)}></button>
                     </div>                   
                 
                 </div>                
